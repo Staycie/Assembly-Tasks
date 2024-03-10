@@ -1,0 +1,89 @@
+.MODEL SMALL
+.STACK 100H  
+
+.DATA         
+   
+   NLINE DB 0DH,0AH,'$'
+   MESSAGE1 DB 'First Integer: ' , '$'
+   MESSAGE2 DB 'Second Integer: ' , '$'
+   MESSAGE3 DB 'Answer is: ' , '$'
+   MESSAGE4 DB 'And it is an Even Number.' , '$'
+   MESSAGE5 DB 'And it is an Odd Number.' , '$'
+
+.CODE
+    MOV AX, @DATA              ;initialize DS
+    MOV DS, AX
+               
+               
+    ;SUBTRACTION   
+       
+    MOV AH, 09H                ;print MESSAGE1
+    MOV DX,OFFSET MESSAGE1
+    INT 21H
+    
+    MOV AH, 01H                ;let user input
+    INT 21H
+    
+    MOV BL, AL                 ;move the AL value (user input) to BL register
+    
+    LEA DX,NLINE	           ;add new line
+    MOV AH,09H
+    INT 21H
+   
+    MOV AH, 09H                ;print MESSAGE2
+    MOV DX,OFFSET MESSAGE2
+    INT 21H
+    
+    MOV AH, 01H                ;let user input
+    INT 21H
+    
+    MOV BH, AL                 ;move AL value to BH register
+    SUB BL, 30H                ;Subtract the ASCII code of '0' (30H) from the value in the BL register to get the actual value of the first character.
+    SUB BH, 30H                ;from BL:34(4) BH:32(2) to BL:4(4) BH:2(2) Then the answer is on bh 
+
+    SUB BH, BL                 ;subtracts the value of the second operand (BL) from the first operand (BH) and stores the result in the first operand (BH). 
+
+    ADD BH, 30H                ;adds 30h to BH para maconvert ang result into real number.
+    
+    LEA DX, NLINE	           ;add line
+    MOV AH, 09H
+    INT 21H
+    
+    MOV AH, 09H                ;print MESSAGE3
+    MOV DX,OFFSET MESSAGE3
+    INT 21H                    ;AL = 24H
+    
+    MOV DL,BH                  ;move the BH value to DL register
+    
+    MOV AH, 02H                ;dispplay char -> char in DL
+    INT 21H
+    
+     
+    ;ODD OR EVEN  
+    
+    DIV DL                     ;Divide the value in AL by 2, with the result in AH and remainder in AL
+    CMP AH, 0                  ;Compare the value of AH to 0
+    JE EVEN                    ;If AH is equal to 0 (i.e., the remainder is 0), jump to EVEN
+    
+    LEA DX,NLINE	       ;add new line    
+    MOV AH,09H
+    INT 21H
+     
+    MOV AH, 09H                ;print MESSAGE4
+    MOV DX,OFFSET MESSAGE4
+    INT 21H
+    
+    MOV AH, 4CH                ;Set the value of AH to 4Ch to terminate the program or means back to DOS
+    INT 21H      
+    
+    LEA DX,NLINE	       ;add new line    
+    MOV AH,09H
+    INT 21H
+    
+    EVEN:
+    MOV AH, 09H                ;print MESSAGE5
+    MOV DX,OFFSET MESSAGE5
+    INT 21H   
+    
+    
+END

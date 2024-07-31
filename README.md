@@ -23,9 +23,17 @@
 <video controls src="assets/vids/EMU8086-demo-vid1.mp4"></video>
 
 
+https://github.com/user-attachments/assets/f43699b3-5c9d-40f6-b60a-a3593def081e
+
+
+
 - Can also run the program per line by just clicking the "single step" button.
 
 <video controls src="assets/vids/emu8086-demo-vid2.mp4" title="Title"></video>
+
+
+https://github.com/user-attachments/assets/cb5457b3-4f91-471a-8112-e3db7bdf641e
+
 
 
 
